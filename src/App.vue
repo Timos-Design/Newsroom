@@ -1,32 +1,126 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+    <vm-notification />
+    <NRNavbar />
+    <NRRouter />
   </div>
 </template>
 
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator';
+import NRNavbar from '@/components/NRNavbar.vue';
+import NRRouter from '@/components/NRRouter.vue';
+import { backendUrl } from '@/utils/constants';
+import { TDNews, TDProject } from './utils/interfaces';
+import {
+  registerMediaQueries,
+  unregisterMediaQueries,
+} from '@/utils/mediaQueries';
+
+@Component({
+  components: {
+    NRRouter,
+    NRNavbar,
+  },
+})
+export default class App extends Vue {
+  mounted(): void {
+    registerMediaQueries();
+    fetch(`${backendUrl}/newsroom?limit=17`)
+      .then((res) => res.json())
+      .then((news: TDNews[]) => {
+        this.$store.commit('news', news);
+      });
+
+    fetch(`${backendUrl}/newsroom/featured`)
+      .then((res) => res.json())
+      .then((news: TDNews[]) => {
+        this.$store.commit('featured', news);
+      });
+
+    fetch(`${backendUrl}/newsroom/projects`)
+      .then((res) => res.json())
+      .then((projectIds: string[]) => {
+        this.$store.commit('projectIds', projectIds);
+      });
+
+    fetch(`${backendUrl}/projects`)
+      .then((res) => res.json())
+      .then((projects: TDProject[]) => {
+        this.$store.commit('projects', projects);
+      });
+  }
+
+  beforeDestroy(): void {
+    unregisterMediaQueries();
+  }
+}
+</script>
+
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+html {
+  font-family: -apple-system, BlinkMacSystemFont, SF Pro Display, Segoe UI,
+    Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji,
+    Segoe UI Symbol;
+  scroll-behavior: smooth;
+  text-rendering: auto;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
 }
 
-#nav {
-  padding: 30px;
+body {
+  min-height: 100vh;
+  margin: 0;
+}
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+.vm-notification__image img {
+  object-fit: cover !important;
+  border-radius: $border-radius;
+  height: 50px !important;
+  width: 50px !important;
+}
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+[content] {
+  padding: 0 5vw;
+  padding-bottom: calc(20px + env(safe-area-inset-bottom));
+  padding-top: calc(70px + env(safe-area-inset-top));
+
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+[center] {
+  text-align: center;
+}
+
+i.ti-chevron-right {
+  font-size: 0.6em;
+}
+
+.news-type {
+  text-transform: uppercase;
+  font-size: 0.75em;
+  font-weight: bold;
+  margin-bottom: 0.15em;
+
+  &[type='update'] {
+    color: rgba(var(--vm-primary), 1);
   }
+  &[type='release'] {
+    color: rgba(var(--vm-error), 1);
+  }
+  &[type='feature'] {
+    color: rgba(var(--vm-success), 1);
+  }
+}
+.news-title {
+  flex: 1 1 0px;
+  font-weight: bold;
+  font-size: 1.2em;
+  flex-grow: 1;
+}
+.news-date {
+  margin-top: 10px;
+  font-size: 0.9em;
+  color: rgba(var(--vm-color-secondary), 1);
 }
 </style>

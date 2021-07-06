@@ -1,30 +1,55 @@
-import Vue from "vue";
-import VueRouter, { RouteConfig } from "vue-router";
-import Home from "../views/Home.vue";
+import Vue from 'vue';
+import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
-
-const routes: Array<RouteConfig> = [
-  {
-    path: "/",
-    name: "Home",
-    component: Home,
-  },
-  {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
-  },
-];
+export const suffix = " | Timo's Newsroom";
 
 const router = new VueRouter({
-  mode: "history",
+  scrollBehavior(to, _from, savePosition) {
+    if (savePosition && to.name !== 'news') return savePosition;
+    return { x: 0, y: 0 };
+  },
+
+  mode: 'history',
   base: process.env.BASE_URL,
-  routes,
+  routes: [
+    {
+      path: '/',
+      name: 'home',
+      component: () => import('@/views/Home.vue'),
+      meta: {
+        title: 'Home',
+      },
+    },
+    {
+      path: '/news/:id',
+      name: 'news',
+      component: () => import('@/views/News.vue'),
+      meta: {
+        title: 'News',
+      },
+    },
+    {
+      path: '/search/:query',
+      name: 'search',
+      component: () => import('@/views/Search.vue'),
+      meta: {
+        title: 'Search',
+      },
+    },
+    {
+      path: '/project/:project',
+      name: 'project',
+      component: () => import('@/views/Project.vue'),
+      meta: {
+        title: 'Project',
+      },
+    },
+    {
+      path: '*',
+      redirect: { name: 'home' },
+    },
+  ],
 });
 
 export default router;
