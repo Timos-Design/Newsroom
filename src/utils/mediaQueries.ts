@@ -16,5 +16,5 @@ function mediaListenerDarkmode(event: MediaQueryListEvent): void {
 }
 
 function setDark(dark: boolean): void {
-  Vue.prototype.$vm.setTheme(dark ? 'dark' : 'light');
+  Vue.prototype.$vm.setTheme(dark ? 'light' : 'light');
 }

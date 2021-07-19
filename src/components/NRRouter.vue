@@ -29,7 +29,7 @@ export default class NRRouter extends Vue {
         this.transitionName =
           toDepth < fromDepth ? 'slide-right' : 'slide-left';
       }
-      this.$store.commit('sidebar', false);
+
       next();
     });
   }

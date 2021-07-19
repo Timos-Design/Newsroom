@@ -79,7 +79,9 @@ export default class NRFeatured extends Vue {
   }
 
   public slideTo(slide: number): void {
-    slide = Math.min(this.news.length - 1, Math.max(0, slide));
+    if (slide < 0) slide = this.news.length - 1;
+    else if (slide >= this.news.length) slide = 0;
+
     const slider = this.$refs.slider as HTMLElement;
     this.autoSlide();
     if (!slider) return;
@@ -98,7 +100,7 @@ export default class NRFeatured extends Vue {
     background: linear-gradient(to bottom, transparent, black);
     color: #fff;
     margin: -20px {
-      top: 130px;
+      top: 174px;
     }
     padding: 20px;
     border-radius: 0 0 $border-radius $border-radius;

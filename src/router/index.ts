@@ -22,6 +22,14 @@ const router = new VueRouter({
       },
     },
     {
+      path: '/archive/:page?',
+      name: 'archive',
+      component: () => import('@/views/archives/Archive.vue'),
+      meta: {
+        title: 'Archive',
+      },
+    },
+    {
       path: '/news/:id',
       name: 'news',
       component: () => import('@/views/News.vue'),

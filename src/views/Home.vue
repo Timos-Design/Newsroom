@@ -20,7 +20,9 @@
 
     <br />
     <div center>
-      <vm-link>View more <i class="ti-chevron-right" /></vm-link>
+      <vm-link routeName="archive">
+        View more <i class="ti-chevron-right" />
+      </vm-link>
     </div>
   </div>
 </template>

@@ -27,7 +27,7 @@
       </form>
       <vm-title subtitle="Projects" />
       <br />
-      <vm-grid gap="10px">
+      <vm-grid gap="10px" v-if="projects">
         <div v-for="p in projects" :key="p.id">
           <vm-link
             :to="{ name: 'project', params: { project: p.title } }"
@@ -67,6 +67,9 @@ export default class NRNavbar extends Vue {
   get projects(): TDProject[] {
     const ids: string[] = this.$store.getters.projectIds;
     const pro: TDProject[] = this.$store.getters.projects;
+    if (!ids || !pro) {
+      return [];
+    }
 
     return ids.map((id) => pro.filter((x) => x.id === id)[0]);
   }

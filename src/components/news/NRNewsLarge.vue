@@ -34,11 +34,11 @@ export default class NRNewsLarge extends Vue {
 
   border-radius: $border-radius;
   background: rgba(var(--vm-background), 1);
-  box-shadow: 4px 8px 20px rgba(#000, 0.1);
+  box-shadow: 4px 8px 20px rgba(#000, 0.05);
 
   transition: 0.1s ease-in-out;
   &:hover {
-    box-shadow: 4px 8px 20px rgba(#000, 0.15);
+    box-shadow: 4px 8px 20px rgba(#000, 0.08);
     transform: scale(1.0124);
   }
   &:active {
