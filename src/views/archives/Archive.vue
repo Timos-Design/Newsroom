@@ -13,6 +13,10 @@
       <NRArchiveList v-if="news && news.length > 0" :news="news" />
     </vm-revealer>
 
+    <vm-revealer>
+      <p v-if="news && news.length === 0">There are no more news :(</p>
+    </vm-revealer>
+
     <vm-flow horizontal="center" v-if="news">
       <span>
         <vm-button
