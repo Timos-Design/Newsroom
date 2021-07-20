@@ -3,6 +3,26 @@
     <vm-notification />
     <NRNavbar />
     <NRRouter />
+
+    <vm-dialog v-model="updateAvailable">
+      <vm-flow flow="column">
+        <NRLogo height="150" width="150" />
+        <vm-title title="Update Available" />
+        <br />
+        <span center>
+          Lets update the Newsroom to enjoy the latest features.
+        </span>
+      </vm-flow>
+
+      <template slot="footer">
+        <vm-dialog-button
+          color="error"
+          title="Cancel"
+          @click="updateAvailable = false"
+        />
+        <vm-dialog-button title="Update" @click="refresh" />
+      </template>
+    </vm-dialog>
   </div>
 </template>
 
@@ -16,14 +36,38 @@ import {
   registerMediaQueries,
   unregisterMediaQueries,
 } from '@/utils/mediaQueries';
+import NRLogo from './components/NRLogo.vue';
 
 @Component({
   components: {
     NRRouter,
     NRNavbar,
+    NRLogo,
   },
 })
 export default class App extends Vue {
+  public registration: ServiceWorkerRegistration | null = null;
+  public updateAvailable = false;
+  public refreshing = false;
+
+  created(): void {
+    document.addEventListener(
+      'serviceWorkerUpdateEvent',
+      (e) => {
+        const reg = e as CustomEvent<ServiceWorkerRegistration>;
+        this.registration = reg.detail;
+        this.updateAvailable = true;
+      },
+      { once: true }
+    );
+
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (this.refreshing) return;
+      this.refreshing = true;
+      window.location.reload();
+    });
+  }
+
   mounted(): void {
     registerMediaQueries();
     fetch(`${backendUrl}/newsroom?limit=17`)
@@ -53,6 +97,13 @@ export default class App extends Vue {
 
   beforeDestroy(): void {
     unregisterMediaQueries();
+  }
+
+  public refresh(): void {
+    this.updateAvailable = false;
+    if (this.registration) {
+      this.registration.waiting?.postMessage({ type: 'SKIP_WAITING' });
+    }
   }
 }
 </script>
