@@ -3,6 +3,7 @@
     <vm-notification />
     <NRNavbar />
     <NRRouter />
+
     <NRUpdateAvailable v-model="updateAvailable" @refresh="refresh" />
   </div>
 </template>
