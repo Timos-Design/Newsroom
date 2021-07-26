@@ -1,41 +1,48 @@
 <template>
   <div class="view-archive">
-    <vm-revealer>
-      <div v-if="!news">
-        <vm-flow flow="column">
-          <br />
-          <vm-spinner />
-          <p>Loading news...</p>
-        </vm-flow>
-      </div>
-    </vm-revealer>
-    <vm-revealer>
-      <NRArchiveList v-if="news && news.length > 0" :news="news" />
-    </vm-revealer>
-
-    <vm-revealer>
-      <p v-if="news && news.length === 0">There are no more news :(</p>
-    </vm-revealer>
-
-    <vm-flow horizontal="center" v-if="news">
-      <span>
-        <vm-button
-          icon="ti-chevron-left"
-          :round="true"
-          :disabled="page === 1"
-          @click="prev"
-        />
-      </span>
-      <div class="current-page">Page {{ page }}</div>
-      <span>
-        <vm-button
-          icon="ti-chevron-right"
-          :round="true"
-          :disabled="news && news.length < limit"
-          @click="next"
-        />
-      </span>
+    <vm-flow v-if="!news" flow="column">
+      <br />
+      <vm-spinner size="8px" />
+      <p>Loading news...</p>
     </vm-flow>
+
+    <template v-else-if="news.length === 0">
+      <br />
+      <vm-flow horizontal="center">
+        <vm-flow>
+          <vm-button
+            icon="ti-chevron-left"
+            :round="true"
+            :disabled="page === 1"
+            @click="prev"
+          />
+        </vm-flow>
+        <p>There is no further news</p>
+      </vm-flow>
+    </template>
+
+    <template v-else>
+      <NRArchiveList :news="news" />
+      <vm-flow horizontal="center" v-if="news && news.length > 0">
+        <span>
+          <vm-button
+            icon="ti-chevron-left"
+            :round="true"
+            :disabled="page === 1"
+            @click="prev"
+          />
+        </span>
+        <div class="current-page">Page {{ page }}</div>
+        <span>
+          <vm-button
+            icon="ti-chevron-right"
+            :round="true"
+            :disabled="news && news.length < limit"
+            @click="next"
+          />
+        </span>
+      </vm-flow>
+    </template>
   </div>
 </template>
 
@@ -102,6 +109,9 @@ export default class Archive extends Vue {
     padding: 0 30px;
     font-weight: 600;
     color: rgba(var(--vm-color-secondary), 1);
+  }
+  .vm-flow .vm-flow .vm-button {
+    margin-right: 20px;
   }
 }
 </style>

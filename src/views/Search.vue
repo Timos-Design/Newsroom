@@ -72,7 +72,7 @@ export default class Search extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .view-search {
   i.ti-exclamation-triangle {
     font-size: 40px;
@@ -82,11 +82,11 @@ export default class Search extends Vue {
   form {
     display: flex;
     width: 100%;
-    /deep/ *:after {
+    *:after {
       background: none !important;
     }
 
-    /deep/ .vm-input--input {
+    .vm-input--input {
       padding: 5px 15px;
     }
   }

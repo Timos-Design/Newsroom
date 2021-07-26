@@ -37,13 +37,13 @@ export default class NRArchiveList extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .view-nr-archive-list {
   .news-title {
     color: rgba(var(--vm-color-secondary), 1);
   }
   @media only screen and (min-width: 400px) {
-    /deep/ .image-wrapper {
+    .image-wrapper {
       width: 174px;
     }
   }
@@ -51,7 +51,7 @@ export default class NRArchiveList extends Vue {
   @media only screen and(min-width: 700px) {
     .nr-grid-small {
       grid-template-columns: repeat(1, 1fr);
-      /deep/ .nr-news-small:nth-last-child(2) {
+      .nr-news-small:nth-last-child(2) {
         border-bottom: 1px solid rgba(var(--vm-border), 1);
       }
     }

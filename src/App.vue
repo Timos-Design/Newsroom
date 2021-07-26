@@ -3,26 +3,7 @@
     <vm-notification />
     <NRNavbar />
     <NRRouter />
-
-    <vm-dialog v-model="updateAvailable">
-      <vm-flow flow="column">
-        <NRLogo height="150" width="150" />
-        <vm-title title="Update Available" />
-        <br />
-        <span center>
-          Lets update the Newsroom to enjoy the latest features.
-        </span>
-      </vm-flow>
-
-      <template slot="footer">
-        <vm-dialog-button
-          color="error"
-          title="Cancel"
-          @click="updateAvailable = false"
-        />
-        <vm-dialog-button title="Update" @click="refresh" />
-      </template>
-    </vm-dialog>
+    <NRUpdateAvailable v-model="updateAvailable" @refresh="refresh" />
   </div>
 </template>
 
@@ -37,12 +18,14 @@ import {
   unregisterMediaQueries,
 } from '@/utils/mediaQueries';
 import NRLogo from './components/NRLogo.vue';
+import NRUpdateAvailable from './components/NRUpdateAvailable.vue';
 
 @Component({
   components: {
     NRRouter,
     NRNavbar,
     NRLogo,
+    NRUpdateAvailable,
   },
 })
 export default class App extends Vue {
@@ -143,7 +126,8 @@ body {
   text-align: center;
 }
 
-i.ti-chevron-right {
+i.ti-chevron-right,
+i.ti-chevron-left {
   font-size: 0.6em;
 }
 

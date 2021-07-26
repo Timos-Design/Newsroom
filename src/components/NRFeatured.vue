@@ -1,19 +1,19 @@
 <template>
   <div class="nr-featured" v-if="news">
     <div class="featured-news" @scroll="scrolled" ref="slider">
-      <vm-card
-        type="fullscreen"
+      <router-link
         v-for="n in news"
         :key="n.id"
-        :image="n.featured"
         :to="{ name: 'news', params: { id: n.title + '.' + n.id } }"
       >
-        <div class="news-container">
-          <div class="news-type" :type="n.type">{{ n.type }}</div>
-          <div class="news-title">{{ n.title }}</div>
-          <div class="news-date">{{ $fmt(n.timestamp) }}</div>
-        </div>
-      </vm-card>
+        <vm-card type="fullscreen" :image="n.featured">
+          <div class="news-container">
+            <div class="news-type" :type="n.type">{{ n.type }}</div>
+            <div class="news-title">{{ n.title }}</div>
+            <div class="news-date">{{ $fmt(n.timestamp) }}</div>
+          </div>
+        </vm-card>
+      </router-link>
     </div>
 
     <vm-flow v-if="news.length > 1">
@@ -145,23 +145,21 @@ export default class NRFeatured extends Vue {
       display: none;
     }
 
-    .vm-card {
+    a {
       width: 90vw;
       max-width: 800px;
       flex-shrink: 0;
       margin: 0 15px;
-
+      text-decoration: none;
+      scroll-snap-align: center;
+      transition: 0.1s ease-in-out;
       &:first-child {
         margin-left: 5vw;
       }
       &:last-child {
         margin-right: 5vw;
       }
-
-      scroll-snap-align: center;
-      transition: 0.1s ease-in-out;
-
-      &:hover {
+      .vm-card:hover {
         transform: none;
       }
     }

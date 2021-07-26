@@ -37,7 +37,7 @@
           </vm-link>
         </div>
       </vm-grid>
-      <vm-spacer />
+      <br />
     </div>
   </vm-navbar>
 </template>
@@ -76,6 +76,24 @@ export default class NRNavbar extends Vue {
 }
 </script>
 
+<style lang="scss">
+.nr-navbar {
+  .vm-navbar--container,
+  .project-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  form {
+    *:after {
+      background: none !important;
+    }
+    .vm-input--input {
+      padding: 2.5px 15px;
+    }
+  }
+}
+</style>
+
 <style lang="scss" scoped>
 .nr-navbar {
   a {
@@ -85,14 +103,8 @@ export default class NRNavbar extends Vue {
     justify-content: center;
     align-items: center;
     b {
-      margin-left: 5px;
+      margin-left: 10px;
     }
-  }
-
-  /deep/ .vm-navbar--container,
-  .project-wrapper {
-    max-width: 900px;
-    margin: 0 auto;
   }
 
   form {
@@ -112,13 +124,6 @@ export default class NRNavbar extends Vue {
       }
       margin-top: -10px;
       margin-bottom: 20px;
-    }
-
-    /deep/ *:after {
-      background: none !important;
-    }
-    /deep/ .vm-input--input {
-      padding: 2.5px 15px;
     }
   }
 }

@@ -18,7 +18,7 @@
         />
       </form>
       <br />
-      <vm-link routeName="home">Home <i class="ti-chevron-right" /></vm-link>
+      <vm-link routeName="home"><i class="ti-chevron-left" /> Home</vm-link>
     </vm-flow>
 
     <template v-else>
@@ -181,19 +181,23 @@ export default class News extends Vue {
 }
 </script>
 
+<style lang="scss">
+.view-news form {
+  *:after {
+    background: none !important;
+  }
+  .vm-input--input {
+    padding: 5px 15px;
+  }
+}
+</style>
+
 <style lang="scss" scoped>
 .view-news {
   form {
     display: flex;
     width: 100%;
     max-width: 300px;
-    /deep/ *:after {
-      background: none !important;
-    }
-
-    /deep/ .vm-input--input {
-      padding: 5px 15px;
-    }
   }
 
   .news-header {
