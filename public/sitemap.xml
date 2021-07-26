@@ -60,9 +60,4 @@
         <changefreq>daily</changefreq>
         <priority>1</priority>
     </url>
-    <url>
-        <loc>https://newsroom.timos.design/project/Fruit%20&%20Vegetable%20Identifier</loc>
-        <changefreq>daily</changefreq>
-        <priority>1</priority>
-    </url>
 </urlset>

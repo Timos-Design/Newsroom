@@ -98,6 +98,7 @@ export default class NRFeatured extends Vue {
 
   .news-container {
     background: linear-gradient(to bottom, transparent, black);
+
     color: #fff;
     margin: -20px {
       top: 174px;
@@ -136,7 +137,7 @@ export default class NRFeatured extends Vue {
     display: flex;
     width: 100%;
 
-    overflow: scroll visible;
+    overflow: scroll hidden;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     flex-grow: 1;
